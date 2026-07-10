@@ -155,38 +155,57 @@
     color: #c3bfb6;
   }
 
-  /* ---------- download: three, equal weight, the primary action ---------- */
+  /* ---------- download: one card per app, an OS button for each platform ---------- */
 
   .downloads {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: .9rem;
-    max-width: 46rem;
     margin-top: 2.6rem;
   }
 
-  .dl {
+  .dl-card {
     display: flex;
     flex-direction: column;
-    gap: .18rem;
-    padding: 1rem 1.25rem;
-    background: var(--accent);
-    color: var(--parchment);           /* 4.64:1 on --accent — passes */
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 140ms ease;
+    gap: .85rem;
+    padding: 1.2rem 1.2rem 1.3rem;
+    background: var(--slate);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
   }
 
-  .dl:hover,
-  .dl:focus-visible { background: var(--accent-deep); }
+  .dl-title { font-weight: 600; font-size: 1.08rem; }
 
-  .dl-name { font-weight: 600; font-size: 1.04rem; }
+  .dl-os-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .45rem;
+  }
 
-  .dl-os {
-    font-family: var(--mono);
-    font-size: .72rem;
-    letter-spacing: .04em;
+  .os-btn {
+    padding: .5rem .4rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
     color: var(--parchment);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: .8rem;
+    text-align: center;
+    transition: background 140ms ease, border-color 140ms ease;
+  }
+
+  .os-btn:hover { border-color: var(--accent); }
+
+  /* the visitor's own platform, highlighted by the script at the end */
+  .os-btn.is-you {
+    background: var(--accent);          /* parchment on --accent — 4.64:1 */
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+
+  .os-btn.is-you:hover {
+    background: var(--accent-deep);
+    border-color: var(--accent-deep);
   }
 
   /* ---------- connect: Discord & Patreon lead, GitHub & YouTube trail ---------- */
@@ -350,18 +369,30 @@
     </p>
 
     <div class="downloads">
-      <a class="dl" data-repo="ArcaneAtlas" href="https://github.com/EricEngineering/ArcaneAtlas/releases/latest">
-        <span class="dl-name">Arcane Atlas</span>
-        <span class="dl-os">Latest release</span>
-      </a>
-      <a class="dl" data-repo="ArcaneEye" href="https://github.com/EricEngineering/ArcaneEye/releases/latest">
-        <span class="dl-name">Arcane Eye</span>
-        <span class="dl-os">Latest release</span>
-      </a>
-      <a class="dl" data-repo="ArcaneAudio" href="https://github.com/EricEngineering/ArcaneAudio/releases/latest">
-        <span class="dl-name">Arcane Audio</span>
-        <span class="dl-os">Latest release</span>
-      </a>
+      <div class="dl-card">
+        <span class="dl-title">Arcane Atlas</span>
+        <div class="dl-os-row">
+          <a class="os-btn" data-os="windows" href="/download/windows">Windows</a>
+          <a class="os-btn" data-os="macos"   href="/download/macos">macOS</a>
+          <a class="os-btn" data-os="linux"   href="/download/linux">Linux</a>
+        </div>
+      </div>
+      <div class="dl-card">
+        <span class="dl-title">Arcane Eye</span>
+        <div class="dl-os-row">
+          <a class="os-btn" data-os="windows" href="/download/eye/windows">Windows</a>
+          <a class="os-btn" data-os="macos"   href="/download/eye/macos">macOS</a>
+          <a class="os-btn" data-os="linux"   href="/download/eye/linux">Linux</a>
+        </div>
+      </div>
+      <div class="dl-card">
+        <span class="dl-title">Arcane Audio</span>
+        <div class="dl-os-row">
+          <a class="os-btn" data-os="windows" href="/download/audio/windows">Windows</a>
+          <a class="os-btn" data-os="macos"   href="/download/audio/macos">macOS</a>
+          <a class="os-btn" data-os="linux"   href="/download/audio/linux">Linux</a>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -369,7 +400,7 @@
 <section class="wrap connect">
   <div class="connect-lead">
     <a class="link-primary" href="/discord">Join the Discord</a>
-    <a class="link-primary" href="/patreon">Support on Patreon</a>
+    <a class="link-primary" href="/patreon">Please Consider Supporting on Patreon</a>
   </div>
   <div class="connect-quiet">
     <a class="link-quiet" href="/github">GitHub</a>
@@ -450,32 +481,26 @@
 </footer>
 
 <script>
-  // Point each download button at the right installer for the visitor's OS.
-  // Falls back to the repo's releases page when the platform is unknown or
-  // JavaScript is off — the HTML href already points there.
-  function wireDownload(repo, el) {
-    var base = "https://github.com/EricEngineering/" + repo + "/releases/latest";
-    var os = el.querySelector(".dl-os");
+  // Highlight the visitor's own platform across all three app cards. Every OS
+  // button is a real link either way — with JavaScript off you just pick your
+  // platform yourself; nothing here depends on the script running.
+  (function () {
     var rules = [
-      [/Win/i,            "Windows", repo + "-Setup-windows.exe"],
-      [/Mac|iPhone|iPad/, "macOS",   repo + "-macos.dmg"],
-      [/Linux|Android/,   "Linux",   repo + "-linux.tar.gz"]
+      [/Win/i,            "windows"],
+      [/Mac|iPhone|iPad/, "macos"],
+      [/Linux|Android/,   "linux"]
     ];
-    var ua = navigator.userAgent;
+    var ua = navigator.userAgent, you = null;
     for (var i = 0; i < rules.length; i++) {
-      if (rules[i][0].test(ua)) {
-        el.href = base + "/download/" + rules[i][2];
-        if (os) os.textContent = "Download for " + rules[i][1];
-        return;
-      }
+      if (rules[i][0].test(ua)) { you = rules[i][1]; break; }
     }
-    if (os) os.textContent = "All platforms";
-  }
-
-  var buttons = document.querySelectorAll(".dl[data-repo]");
-  for (var i = 0; i < buttons.length; i++) {
-    wireDownload(buttons[i].getAttribute("data-repo"), buttons[i]);
-  }
+    if (!you) return;
+    var mine = document.querySelectorAll('.os-btn[data-os="' + you + '"]');
+    for (var j = 0; j < mine.length; j++) {
+      mine[j].classList.add("is-you");
+      mine[j].title = "Recommended for your system";
+    }
+  })();
 </script>
 
 </body>
