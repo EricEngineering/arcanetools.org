@@ -1,0 +1,16 @@
+# Cloudflare Pages redirects.
+# Format: /path  destination  status
+# 302 everywhere on purpose: these targets change, and a cached 301 is forever.
+
+/discord   https://discord.gg/U7KCaJ9Pkb                      302
+/patreon   https://www.patreon.com/EricEngineering            302
+/github    https://github.com/EricEngineering                 302
+
+# Latest release, resolved by GitHub at request time. Never needs editing
+# when a new version ships — the workflow just has to attach an asset with
+# this exact filename.
+/download          https://github.com/EricEngineering/arcaneatlas/releases/latest/download/ArcaneAtlas-Setup-windows.exe  302
+/download/windows  https://github.com/EricEngineering/arcaneatlas/releases/latest/download/ArcaneAtlas-Setup-windows.exe  302
+/download/macos    https://github.com/EricEngineering/arcaneatlas/releases/latest/download/ArcaneAtlas-macos.dmg          302
+/download/linux    https://github.com/EricEngineering/arcaneatlas/releases/latest/download/ArcaneAtlas-linux.tar.gz       302
+/releases          https://github.com/EricEngineering/arcaneatlas/releases/latest                                         302

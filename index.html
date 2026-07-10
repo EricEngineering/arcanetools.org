@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arcane Tools — free tabletop software for the table you're sitting at</title>
+<meta name="description" content="Three free, open-source desktop tools for running tabletop RPGs in person. No subscription, no account, no paywall.">
+
+<meta property="og:title" content="Arcane Tools">
+<meta property="og:description" content="Free, open-source tools for running tabletop RPGs in person.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arcanetools.org/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:        #0d1219;
+    --slate:      #161e29;
+    --rule:       #26313f;
+    --grid:       #2e3b4b;
+    --parchment:  #e9e4d9;
+    --muted:      #8a94a3;
+    --token:      #27ae60;
+    --token-dim:  #1d7d46;
+
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+    --measure: 62rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  a { color: var(--parchment); }
+
+  :focus-visible {
+    outline: 2px solid var(--token);
+    outline-offset: 3px;
+  }
+
+  /* ---------- hero: the fog-of-war grid ---------- */
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .fog {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .fog-base,
+  .fog-lit {
+    position: absolute;
+    inset: -2px;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 46px 46px;
+  }
+
+  .fog-base { opacity: 0.16; }
+
+  /* Grid is only fully visible where a token stands. That is fog of war. */
+  .fog-lit {
+    opacity: 0;
+    -webkit-mask-image:
+      radial-gradient(circle at 18% 62%, #000 0 42px, transparent 150px),
+      radial-gradient(circle at 31% 34%, #000 0 34px, transparent 128px),
+      radial-gradient(circle at 24% 84%, #000 0 30px, transparent 110px);
+    mask-image:
+      radial-gradient(circle at 18% 62%, #000 0 42px, transparent 150px),
+      radial-gradient(circle at 31% 34%, #000 0 34px, transparent 128px),
+      radial-gradient(circle at 24% 84%, #000 0 30px, transparent 110px);
+    animation: lift 1400ms cubic-bezier(.2,.7,.2,1) 200ms forwards;
+  }
+
+  @keyframes lift { to { opacity: 0.85; } }
+
+  .token {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    margin: -6.5px 0 0 -6.5px;
+    border-radius: 50%;
+    background: var(--token);
+    box-shadow: 0 0 0 4px rgba(39,174,96,.14), 0 0 22px rgba(39,174,96,.35);
+    opacity: 0;
+    animation: place 600ms ease-out forwards;
+  }
+
+  .token.t1 { left: 18%; top: 62%; animation-delay: 700ms; }
+  .token.t2 { left: 31%; top: 34%; animation-delay: 880ms; }
+  .token.t3 { left: 24%; top: 84%; animation-delay: 1060ms; }
+
+  @keyframes place {
+    from { opacity: 0; transform: scale(.4); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .hero-inner {
+    position: relative;
+    padding: 7rem 0 5.5rem;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    margin: 1.1rem 0 0;
+  }
+
+  h1 .dim { color: var(--muted); font-weight: 500; }
+
+  .lede {
+    max-width: 34rem;
+    margin: 1.6rem 0 0;
+    font-size: 1.12rem;
+    color: #c3bfb6;
+  }
+
+  /* ---------- download ---------- */
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.4rem;
+    margin-top: 2.6rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .95rem 1.6rem;
+    background: var(--token);
+    color: #06130c;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background 140ms ease;
+  }
+
+  .btn:hover { background: #2fc26e; }
+
+  .btn-note {
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--muted);
+  }
+
+  .btn-note a { color: var(--muted); }
+
+  .terms {
+    margin-top: 2.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.5rem;
+    font-family: var(--mono);
+    font-size: .76rem;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+
+  /* ---------- tools ---------- */
+
+  .tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 5rem 0;
+  }
+
+  .tool {
+    background: var(--slate);
+    padding: 2.2rem 1.8rem 2.4rem;
+  }
+
+  .tool h2 {
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    margin: .9rem 0 .6rem;
+  }
+
+  .tool p {
+    margin: 0;
+    color: #b3aea5;
+    font-size: .96rem;
+  }
+
+  /* ---------- honesty note ---------- */
+
+  .note {
+    border-left: 2px solid var(--token-dim);
+    padding: .2rem 0 .2rem 1.4rem;
+    margin: 5rem 0;
+    max-width: 44rem;
+  }
+
+  .note h2 {
+    font-size: 1.05rem;
+    margin: .7rem 0 .6rem;
+  }
+
+  .note p {
+    color: #b3aea5;
+    font-size: .96rem;
+    margin: 0 0 .8rem;
+  }
+
+  code {
+    font-family: var(--mono);
+    font-size: .88em;
+    color: var(--parchment);
+  }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2.4rem 0 3.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.2rem;
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--muted);
+  }
+
+  footer nav { display: flex; gap: 1.5rem; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--parchment); }
+
+  @media (max-width: 640px) {
+    .hero-inner { padding: 4.5rem 0 3.5rem; }
+    .fog-lit, .token { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fog-lit { animation: none; opacity: .85; }
+    .token   { animation: none; opacity: 1; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="fog" aria-hidden="true">
+    <div class="fog-base"></div>
+    <div class="fog-lit"></div>
+    <span class="token t1"></span>
+    <span class="token t2"></span>
+    <span class="token t3"></span>
+  </div>
+
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Arcane Tools</p>
+    <h1>Software for the table<br><span class="dim">you're already sitting at.</span></h1>
+    <p class="lede">
+      Three desktop tools for running tabletop RPGs in person. Drive a TV from your
+      laptop, keep the fog where it belongs, and stop alt-tabbing mid-combat.
+    </p>
+
+    <div class="actions">
+      <a class="btn" id="download" href="https://github.com/EricEngineering/arcaneatlas/releases/latest">
+        Download Arcane Atlas
+      </a>
+      <span class="btn-note" id="platform">
+        <a href="https://github.com/EricEngineering/arcaneatlas/releases/latest">All platforms &amp; older versions</a>
+      </span>
+    </div>
+
+    <p class="terms">
+      <span>Free forever</span>
+      <span>No account</span>
+      <span>No paywall</span>
+      <span>GPLv3</span>
+    </p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="tools">
+    <article class="tool">
+      <p class="eyebrow">Maps</p>
+      <h2>Arcane Atlas</h2>
+      <p>A battle map on the TV, fog of war you control, and player tokens your
+         players move from their own phones by scanning a QR code.</p>
+    </article>
+
+    <article class="tool">
+      <p class="eyebrow">Handouts</p>
+      <h2>Arcane Eye</h2>
+      <p>Snip any corner of your screen — a portrait, a statblock, a letter from
+         the duke — and throw it up for the table. Nothing else leaks.</p>
+    </article>
+
+    <article class="tool">
+      <p class="eyebrow">Sound</p>
+      <h2>Arcane Audio</h2>
+      <p>Ambient tracks and loops, cued and crossfaded, without a browser tab
+         or a subscription in sight.</p>
+    </article>
+  </section>
+
+  <section class="note">
+    <p class="eyebrow">Before you install</p>
+    <h2>Windows will probably warn you.</h2>
+    <p>
+      New software has no reputation with Microsoft SmartScreen, so the first time
+      you run the installer you may see a blue <em>“Windows protected your PC”</em>
+      screen. Click <code>More info</code>, then <code>Run anyway</code>.
+    </p>
+    <p>
+      This is normal for small independent software and it fades as more people
+      install. Every release here is signed and built in the open — you can read
+      the build workflow, and the source, on GitHub.
+    </p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Built by Eric Hernandez · GPLv3</span>
+  <nav>
+    <a href="https://github.com/EricEngineering">GitHub</a>
+    <a href="/discord">Discord</a>
+    <a href="/patreon">Patreon</a>
+  </nav>
+</footer>
+
+<script>
+  // Point the primary button at the right installer. Falls back to the
+  // releases page for anything we can't identify.
+  (function () {
+    var base = "https://github.com/EricEngineering/arcaneatlas/releases/latest";
+    var ua = navigator.userAgent;
+    var map = [
+      [/Win/i,            "Windows", base + "/download/ArcaneAtlas-Setup-windows.exe"],
+      [/Mac|iPhone|iPad/, "macOS",   base + "/download/ArcaneAtlas-macos.dmg"],
+      [/Linux|Android/,   "Linux",   base + "/download/ArcaneAtlas-linux.tar.gz"]
+    ];
+
+    for (var i = 0; i < map.length; i++) {
+      if (map[i][0].test(ua)) {
+        var btn = document.getElementById("download");
+        btn.href = map[i][2];
+        btn.textContent = "Download Arcane Atlas for " + map[i][1];
+        break;
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
