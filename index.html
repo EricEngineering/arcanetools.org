@@ -17,14 +17,17 @@
 
 <style>
   :root {
-    --ink:        #0d1219;
-    --slate:      #161e29;
-    --rule:       #26313f;
-    --grid:       #2e3b4b;
-    --parchment:  #e9e4d9;
-    --muted:      #8a94a3;
-    --token:      #27ae60;
-    --token-dim:  #1d7d46;
+    --ink:         #0d1219;
+    --slate:       #161e29;
+    --rule:        #26313f;
+    --grid:        #2e3b4b;
+    --parchment:   #e9e4d9;
+    --muted:       #8a94a3;
+
+    /* arcana purple — the one accent (from ArcaneAtlas main.py) */
+    --accent:      #6e56a9;   /* brand base: buttons, borders          */
+    --accent-hi:   #8f78c9;   /* lighter tint: dots, focus, prose links */
+    --accent-deep: #574282;   /* deeper: primary-button hover           */
 
     --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -63,7 +66,7 @@
   a { color: var(--parchment); }
 
   :focus-visible {
-    outline: 2px solid var(--token);
+    outline: 2px solid var(--accent-hi);
     outline-offset: 3px;
   }
 
@@ -115,8 +118,8 @@
     height: 13px;
     margin: -6.5px 0 0 -6.5px;
     border-radius: 50%;
-    background: var(--token);
-    box-shadow: 0 0 0 4px rgba(39,174,96,.14), 0 0 22px rgba(39,174,96,.35);
+    background: var(--accent-hi);
+    box-shadow: 0 0 0 4px rgba(143,120,201,.16), 0 0 22px rgba(143,120,201,.40);
     opacity: 0;
     animation: place 600ms ease-out forwards;
   }
@@ -152,50 +155,79 @@
     color: #c3bfb6;
   }
 
-  /* ---------- download ---------- */
+  /* ---------- download: three, equal weight, the primary action ---------- */
 
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem 1.4rem;
+  .downloads {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .9rem;
+    max-width: 46rem;
     margin-top: 2.6rem;
   }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: .6rem;
-    padding: .95rem 1.6rem;
-    background: var(--token);
-    color: #06130c;
-    font-weight: 600;
-    font-size: 1rem;
+  .dl {
+    display: flex;
+    flex-direction: column;
+    gap: .18rem;
+    padding: 1rem 1.25rem;
+    background: var(--accent);
+    color: var(--parchment);           /* 4.64:1 on --accent — passes */
     text-decoration: none;
-    border-radius: 3px;
+    border-radius: 4px;
     transition: background 140ms ease;
   }
 
-  .btn:hover { background: #2fc26e; }
+  .dl:hover,
+  .dl:focus-visible { background: var(--accent-deep); }
 
-  .btn-note {
+  .dl-name { font-weight: 600; font-size: 1.04rem; }
+
+  .dl-os {
     font-family: var(--mono);
-    font-size: .78rem;
-    color: var(--muted);
+    font-size: .72rem;
+    letter-spacing: .04em;
+    color: var(--parchment);
   }
 
-  .btn-note a { color: var(--muted); }
+  /* ---------- connect: Discord & Patreon lead, GitHub & YouTube trail ---------- */
 
-  .terms {
-    margin-top: 2.2rem;
+  .connect {
     display: flex;
     flex-wrap: wrap;
-    gap: .5rem 1.5rem;
-    font-family: var(--mono);
-    font-size: .76rem;
-    letter-spacing: .04em;
-    color: var(--muted);
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem 1.4rem;
+    margin: 3.2rem auto;
   }
+
+  .connect-lead { display: flex; flex-wrap: wrap; gap: .9rem; }
+  .connect-quiet { display: flex; gap: 1.4rem; }
+
+  .link-primary {
+    padding: .72rem 1.3rem;
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    color: var(--parchment);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 140ms ease, border-color 140ms ease;
+  }
+
+  .link-primary:hover {
+    background: var(--accent);          /* parchment on --accent — 4.64:1 */
+    border-color: var(--accent);
+  }
+
+  .link-quiet {
+    color: var(--muted);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: .82rem;
+    letter-spacing: .03em;
+    align-self: center;
+  }
+
+  .link-quiet:hover { color: var(--parchment); }
 
   /* ---------- tools ---------- */
 
@@ -225,10 +257,27 @@
     font-size: .96rem;
   }
 
+  /* ---------- about ---------- */
+
+  .about { margin: 5rem auto; }
+
+  .about .prose {
+    max-width: 44rem;
+    margin-top: 1rem;
+  }
+
+  .about .prose p {
+    color: #b3aea5;
+    font-size: 1rem;
+    margin: 0 0 1.1rem;
+  }
+
+  .about .prose a { color: var(--accent-hi); }   /* 5.1:1 on --ink */
+
   /* ---------- honesty note ---------- */
 
   .note {
-    border-left: 2px solid var(--token-dim);
+    border-left: 2px solid var(--accent);
     padding: .2rem 0 .2rem 1.4rem;
     margin: 5rem 0;
     max-width: 44rem;
@@ -265,13 +314,13 @@
     color: var(--muted);
   }
 
-  footer nav { display: flex; gap: 1.5rem; }
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--parchment); }
 
   @media (max-width: 640px) {
     .hero-inner { padding: 4.5rem 0 3.5rem; }
     .fog-lit, .token { display: none; }
+    .downloads { grid-template-columns: 1fr; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -300,23 +349,33 @@
       laptop, keep the fog where it belongs, and stop alt-tabbing mid-combat.
     </p>
 
-    <div class="actions">
-      <a class="btn" id="download" href="https://github.com/EricEngineering/arcaneatlas/releases/latest">
-        Download Arcane Atlas
+    <div class="downloads">
+      <a class="dl" data-repo="ArcaneAtlas" href="https://github.com/EricEngineering/ArcaneAtlas/releases/latest">
+        <span class="dl-name">Arcane Atlas</span>
+        <span class="dl-os">Latest release</span>
       </a>
-      <span class="btn-note" id="platform">
-        <a href="https://github.com/EricEngineering/arcaneatlas/releases/latest">All platforms &amp; older versions</a>
-      </span>
+      <a class="dl" data-repo="ArcaneEye" href="https://github.com/EricEngineering/ArcaneEye/releases/latest">
+        <span class="dl-name">Arcane Eye</span>
+        <span class="dl-os">Latest release</span>
+      </a>
+      <a class="dl" data-repo="ArcaneAudio" href="https://github.com/EricEngineering/ArcaneAudio/releases/latest">
+        <span class="dl-name">Arcane Audio</span>
+        <span class="dl-os">Latest release</span>
+      </a>
     </div>
-
-    <p class="terms">
-      <span>Free forever</span>
-      <span>No account</span>
-      <span>No paywall</span>
-      <span>GPLv3</span>
-    </p>
   </div>
 </header>
+
+<section class="wrap connect">
+  <div class="connect-lead">
+    <a class="link-primary" href="/discord">Join the Discord</a>
+    <a class="link-primary" href="/patreon">Support on Patreon</a>
+  </div>
+  <div class="connect-quiet">
+    <a class="link-quiet" href="/github">GitHub</a>
+    <a class="link-quiet" href="/youtube">YouTube</a>
+  </div>
+</section>
 
 <main class="wrap">
 
@@ -343,18 +402,43 @@
     </article>
   </section>
 
+  <section class="about">
+    <p class="eyebrow">Who makes this</p>
+    <div class="prose">
+      <p>
+        I'm Eric Hernandez, an engineer and educator. I built these because I run
+        games at a real table, and every virtual tabletop I tried assumed I wanted
+        to play online. I didn't — I wanted the screen to serve the table in front
+        of me, not replace it.
+      </p>
+      <p>
+        The software is free, forever. GPLv3. No paywall, no account, no upsell.
+      </p>
+      <p>
+        Code-signing certificates cost about $220 a year — Apple's Developer
+        Program to notarize the macOS builds, and Microsoft Trusted Signing for
+        Windows. Patreon covers that and keeps development going.
+      </p>
+      <p>
+        If these are useful to you, you can support the work on <a href="/patreon">Patreon</a>.
+      </p>
+    </div>
+  </section>
+
   <section class="note">
     <p class="eyebrow">Before you install</p>
-    <h2>Windows will probably warn you.</h2>
+    <h2>Your OS will probably warn you — here's why.</h2>
     <p>
-      New software has no reputation with Microsoft SmartScreen, so the first time
-      you run the installer you may see a blue <em>“Windows protected your PC”</em>
-      screen. Click <code>More info</code>, then <code>Run anyway</code>.
+      These builds aren't code-signed yet, so Microsoft SmartScreen has no
+      reputation for them. The first time you run an installer on Windows you may
+      see a blue <em>“Windows protected your PC”</em> screen — click
+      <code>More info</code>, then <code>Run anyway</code>. On macOS, right-click
+      the app and choose <code>Open</code> the first time to get past Gatekeeper.
     </p>
     <p>
-      This is normal for small independent software and it fades as more people
-      install. Every release here is signed and built in the open — you can read
-      the build workflow, and the source, on GitHub.
+      Signing certificates are the next thing I'm buying. Until then, every build
+      is compiled in the open on GitHub, so you can read the workflow and the
+      source before you trust it.
     </p>
   </section>
 
@@ -362,34 +446,36 @@
 
 <footer class="wrap">
   <span>Built by Eric Hernandez · GPLv3</span>
-  <nav>
-    <a href="https://github.com/EricEngineering">GitHub</a>
-    <a href="/discord">Discord</a>
-    <a href="/patreon">Patreon</a>
-  </nav>
+  <a href="/github">Source on GitHub</a>
 </footer>
 
 <script>
-  // Point the primary button at the right installer. Falls back to the
-  // releases page for anything we can't identify.
-  (function () {
-    var base = "https://github.com/EricEngineering/arcaneatlas/releases/latest";
-    var ua = navigator.userAgent;
-    var map = [
-      [/Win/i,            "Windows", base + "/download/ArcaneAtlas-Setup-windows.exe"],
-      [/Mac|iPhone|iPad/, "macOS",   base + "/download/ArcaneAtlas-macos.dmg"],
-      [/Linux|Android/,   "Linux",   base + "/download/ArcaneAtlas-linux.tar.gz"]
+  // Point each download button at the right installer for the visitor's OS.
+  // Falls back to the repo's releases page when the platform is unknown or
+  // JavaScript is off — the HTML href already points there.
+  function wireDownload(repo, el) {
+    var base = "https://github.com/EricEngineering/" + repo + "/releases/latest";
+    var os = el.querySelector(".dl-os");
+    var rules = [
+      [/Win/i,            "Windows", repo + "-Setup-windows.exe"],
+      [/Mac|iPhone|iPad/, "macOS",   repo + "-macos.dmg"],
+      [/Linux|Android/,   "Linux",   repo + "-linux.tar.gz"]
     ];
-
-    for (var i = 0; i < map.length; i++) {
-      if (map[i][0].test(ua)) {
-        var btn = document.getElementById("download");
-        btn.href = map[i][2];
-        btn.textContent = "Download Arcane Atlas for " + map[i][1];
-        break;
+    var ua = navigator.userAgent;
+    for (var i = 0; i < rules.length; i++) {
+      if (rules[i][0].test(ua)) {
+        el.href = base + "/download/" + rules[i][2];
+        if (os) os.textContent = "Download for " + rules[i][1];
+        return;
       }
     }
-  })();
+    if (os) os.textContent = "All platforms";
+  }
+
+  var buttons = document.querySelectorAll(".dl[data-repo]");
+  for (var i = 0; i < buttons.length; i++) {
+    wireDownload(buttons[i].getAttribute("data-repo"), buttons[i]);
+  }
 </script>
 
 </body>

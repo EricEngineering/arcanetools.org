@@ -10,8 +10,10 @@ Deployed by Cloudflare Pages on push to `main`.
 - Download links use GitHub's `releases/latest/download/<asset>` endpoint.
   The asset filenames are a contract with the ArcaneAtlas release workflow.
   Changing one here without changing it there breaks the download button.
-- Accent color `#27ae60` is the party-token green from ArcaneAtlas. It is the
-  only accent. Don't introduce a second.
+- Accent color `#6e56a9` is arcana purple from ArcaneAtlas (`main.py`, the
+  QProgressBar chunk / splash title). It is the only accent. Don't introduce a
+  second. Expressed as tints of the same hue (lighter for dots/focus/links,
+  deeper for the primary-button hover), never a different color.
 - Quality floor: responsive, visible focus states, `prefers-reduced-motion`
   respected. Keep it.
 
