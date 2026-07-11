@@ -11,6 +11,9 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arcanetools.org/">
 
+<link rel="icon" type="image/png" href="/resources/icon-arcaneatlas.png">
+<link rel="apple-touch-icon" href="/resources/icon-arcaneatlas.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -183,13 +186,26 @@
     border-radius: 5px;
   }
 
-  .dl-title { font-weight: 600; font-size: 1.08rem; }
+  .dl-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-weight: 600;
+    font-size: 1.08rem;
+  }
+
+  .dl-icon {
+    width: 1.5em;
+    height: 1.5em;
+    flex: none;
+    border-radius: 4px;
+    object-fit: contain;
+  }
 
   .dl-ver {
-    margin-left: .5rem;
     font-family: var(--mono);
-    font-size: .74rem;
-    font-weight: 400;
+    font-size: .9rem;
+    font-weight: 500;
     letter-spacing: .02em;
     color: var(--muted);
   }
@@ -396,7 +412,7 @@
 
     <div class="downloads">
       <div class="dl-card">
-        <span class="dl-title">Arcane Atlas<span class="dl-ver">V0.9.0</span></span>
+        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneatlas.png" alt="" width="24" height="24">Arcane Atlas<span class="dl-ver">V0.9.0</span></span>
         <div class="dl-os-row">
           <a class="os-btn" data-os="windows" href="/download/windows">Windows</a>
           <a class="os-btn" data-os="macos"   href="/download/macos">macOS</a>
@@ -404,7 +420,7 @@
         </div>
       </div>
       <div class="dl-card">
-        <span class="dl-title">Arcane Eye<span class="dl-ver">V0.9.0</span></span>
+        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneeye.png" alt="" width="24" height="24">Arcane Eye<span class="dl-ver">V0.9.0</span></span>
         <div class="dl-os-row">
           <a class="os-btn" data-os="windows" href="/download/eye/windows">Windows</a>
           <a class="os-btn" data-os="macos"   href="/download/eye/macos">macOS</a>
@@ -412,7 +428,7 @@
         </div>
       </div>
       <div class="dl-card">
-        <span class="dl-title">Arcane Audio<span class="dl-ver">V0.9.0</span></span>
+        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneaudio.png" alt="" width="24" height="24">Arcane Audio<span class="dl-ver">V0.9.0</span></span>
         <div class="dl-os-row">
           <a class="os-btn" data-os="windows" href="/download/audio/windows">Windows</a>
           <a class="os-btn" data-os="macos"   href="/download/audio/macos">macOS</a>
