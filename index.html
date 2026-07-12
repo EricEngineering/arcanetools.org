@@ -443,7 +443,7 @@
 
     <div class="downloads">
       <div class="dl-card">
-        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneatlas.png" alt="" width="24" height="24">Arcane Atlas<span class="dl-ver">V0.9.0</span></span>
+        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneatlas.png" alt="" width="24" height="24">Arcane Atlas<span class="dl-ver" data-repo="ArcaneAtlas">v0.8.0</span></span>
         <div class="dl-os-row">
           <a class="os-btn" data-os="windows" href="/download/windows">Windows</a>
           <a class="os-btn" data-os="macos"   href="/download/macos">macOS</a>
@@ -451,7 +451,7 @@
         </div>
       </div>
       <div class="dl-card">
-        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneeye.png" alt="" width="24" height="24">Arcane Eye<span class="dl-ver">V0.9.0</span></span>
+        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneeye.png" alt="" width="24" height="24">Arcane Eye<span class="dl-ver" data-repo="ArcaneEye">v0.9.0</span></span>
         <div class="dl-os-row">
           <a class="os-btn" data-os="windows" href="/download/eye/windows">Windows</a>
           <a class="os-btn" data-os="macos"   href="/download/eye/macos">macOS</a>
@@ -459,7 +459,7 @@
         </div>
       </div>
       <div class="dl-card">
-        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneaudio.png" alt="" width="24" height="24">Arcane Audio<span class="dl-ver">V0.9.0</span></span>
+        <span class="dl-title"><img class="dl-icon" src="/resources/icon-arcaneaudio.png" alt="" width="24" height="24">Arcane Audio<span class="dl-ver" data-repo="ArcaneAudio">v0.9.0</span></span>
         <div class="dl-os-row">
           <a class="os-btn" data-os="windows" href="/download/audio/windows">Windows</a>
           <a class="os-btn" data-os="macos"   href="/download/audio/macos">macOS</a>
@@ -593,6 +593,28 @@
     }
     var hint = document.getElementById("dl-hint");
     if (hint) hint.hidden = false;
+  })();
+
+  // Show each app's latest release version, resolved live from its GitHub
+  // release tag — so the number here can never drift from what actually ships.
+  // The hardcoded tag in each .dl-ver is the fallback if this doesn't run
+  // (JS off, offline, or GitHub rate-limited); nothing depends on the fetch.
+  (function () {
+    var spans = document.querySelectorAll(".dl-ver[data-repo]");
+    for (var i = 0; i < spans.length; i++) {
+      (function (el) {
+        var api = "https://api.github.com/repos/EricEngineering/" +
+                  el.getAttribute("data-repo") + "/releases/latest";
+        fetch(api, { headers: { Accept: "application/vnd.github+json" } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) {
+            if (d && d.tag_name) {
+              el.textContent = /^v/i.test(d.tag_name) ? d.tag_name : "v" + d.tag_name;
+            }
+          })
+          .catch(function () { /* keep the fallback text */ });
+      })(spans[i]);
+    }
   })();
 </script>
 
