@@ -281,8 +281,16 @@
     margin: 1.4rem auto 1.75rem;
   }
 
-  .connect-lead { display: flex; flex-wrap: wrap; gap: .9rem; }
+  .connect-lead { display: flex; flex-wrap: wrap; gap: 1.4rem; align-items: flex-start; }
   .connect-quiet { display: flex; gap: 1.4rem; }
+
+  .cta { display: flex; flex-direction: row; align-items: center; gap: .7rem; }
+  .cta-note {
+    font-size: .78rem;
+    line-height: 1.3;
+    color: var(--muted);
+    max-width: 11rem;
+  }
 
   .link-primary {
     padding: .72rem 1.3rem;
@@ -473,8 +481,14 @@
 
 <section class="wrap connect">
   <div class="connect-lead">
-    <a class="link-primary" href="/discord">Join the Discord</a>
-    <a class="link-primary" href="/patreon">Please Consider Patreon</a>
+    <div class="cta">
+      <a class="link-primary" href="/discord">Join the Discord</a>
+      <span class="cta-note">contribute feedback<br>and make it better</span>
+    </div>
+    <div class="cta">
+      <a class="link-primary" href="/patreon">Consider Patreon</a>
+      <span class="cta-note">help cover the fees<br>&amp; continue dev</span>
+    </div>
   </div>
   <div class="connect-quiet">
     <a class="link-quiet" href="/github">GitHub</a>
