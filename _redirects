@@ -10,17 +10,18 @@
 # Latest release, resolved by GitHub at request time. Never needs editing
 # when a new version ships — the workflow just has to attach an asset with
 # this exact filename.
-/download          https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-Setup-windows.exe  302
-/download/windows  https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-Setup-windows.exe  302
-/download/macos    https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-macos.dmg          302
-/download/linux    https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-linux.tar.gz       302
+# Downloads disabled (private testing) — uncomment the /download lines to re-enable.
+#/download          https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-Setup-windows.exe  302
+#/download/windows  https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-Setup-windows.exe  302
+#/download/macos    https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-macos.dmg          302
+#/download/linux    https://github.com/EricEngineering/ArcaneAtlas/releases/latest/download/ArcaneAtlas-linux.tar.gz       302
 
-/download/eye/windows  https://github.com/EricEngineering/ArcaneEye/releases/latest/download/ArcaneEye-Setup-windows.exe  302
-/download/eye/macos    https://github.com/EricEngineering/ArcaneEye/releases/latest/download/ArcaneEye-macos.dmg          302
-/download/eye/linux    https://github.com/EricEngineering/ArcaneEye/releases/latest/download/ArcaneEye-linux.tar.gz       302
+#/download/eye/windows  https://github.com/EricEngineering/ArcaneEye/releases/latest/download/ArcaneEye-Setup-windows.exe  302
+#/download/eye/macos    https://github.com/EricEngineering/ArcaneEye/releases/latest/download/ArcaneEye-macos.dmg          302
+#/download/eye/linux    https://github.com/EricEngineering/ArcaneEye/releases/latest/download/ArcaneEye-linux.tar.gz       302
 
-/download/audio/windows  https://github.com/EricEngineering/ArcaneAudio/releases/latest/download/ArcaneAudio-Setup-windows.exe  302
-/download/audio/macos    https://github.com/EricEngineering/ArcaneAudio/releases/latest/download/ArcaneAudio-macos.dmg          302
-/download/audio/linux    https://github.com/EricEngineering/ArcaneAudio/releases/latest/download/ArcaneAudio-linux.tar.gz       302
+#/download/audio/windows  https://github.com/EricEngineering/ArcaneAudio/releases/latest/download/ArcaneAudio-Setup-windows.exe  302
+#/download/audio/macos    https://github.com/EricEngineering/ArcaneAudio/releases/latest/download/ArcaneAudio-macos.dmg          302
+#/download/audio/linux    https://github.com/EricEngineering/ArcaneAudio/releases/latest/download/ArcaneAudio-linux.tar.gz       302
 
 /releases          https://github.com/EricEngineering/ArcaneAtlas/releases/latest                                         302
