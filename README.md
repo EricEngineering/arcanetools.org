@@ -49,4 +49,4 @@ output directory: `/`
 
 ---
 
-GPLv3, same as the tools.
+AGPLv3, same as the tools.
