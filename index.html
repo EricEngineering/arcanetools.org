@@ -410,15 +410,23 @@
 
   /* ---------- special thanks ---------- */
 
-  .thanks { margin: 5rem auto; max-width: 44rem; }
-  .thanks h2 { font-size: 1.05rem; margin: .7rem 0 1rem; }
+  .thanks { margin: 5rem auto; max-width: 44rem; text-align: center; }
+  .thanks h2 { font-size: 1.7rem; margin: .7rem 0 1rem; }
   .thanks ul {
     list-style: none; margin: 0; padding: 0;
     display: grid; gap: .7rem;
   }
-  .thanks li { color: #b3aea5; font-size: .96rem; }
+  .thanks li { color: #b3aea5; font-size: 1.05rem; }
   .thanks .who { color: var(--parchment); font-weight: 600; }
   .thanks a { color: var(--accent-hi); }
+  .thanks .credit-avatar {
+    width: 32px; height: 32px;
+    border-radius: 5px;          /* square (lightly softened corners) */
+    object-fit: cover;
+    vertical-align: middle;
+    margin-right: .55rem;
+    border: 1px solid var(--accent);
+  }
 
   /* ---------- footer ---------- */
 
@@ -596,13 +604,12 @@
   </section>
 
   <section class="thanks">
-    <p class="eyebrow">Credits</p>
-    <h2>With special thanks</h2>
+    <h2>With Special Thanks</h2>
     <ul>
-      <li><span class="who">Alen72948</span> — icon artwork · <a href="https://www.artstation.com/alen72948">artstation.com/alen72948</a></li>
-      <li><span class="who">Dice Grimorium</span> — map content · <a href="https://dicegrimorium.com/">dicegrimorium.com</a></li>
-      <li><span class="who">Dynamic Dungeons</span> — map content · <a href="https://dynamicdungeons.com/">dynamicdungeons.com</a></li>
-      <li><span class="who">Jules &amp; Ben · JB2A</span> — animation content · <a href="https://github.com/Jules-Bens-Aa/JB2A_DnD5e">github.com/Jules-Bens-Aa</a></li>
+      <li><img class="credit-avatar" src="/resources/dynamicdungeons.gif" alt="Dynamic Dungeons avatar"><span class="who">Dynamic Dungeons</span> — map content · <a href="https://dynamicdungeons.com/">dynamicdungeons.com</a></li>
+      <li><img class="credit-avatar" src="/resources/dicegrimorium.png" alt="Dice Grimorium avatar"><span class="who">Dice Grimorium</span> — map content · <a href="https://dicegrimorium.com/">dicegrimorium.com</a></li>
+      <li><img class="credit-avatar" src="/resources/jb2a.png" alt="JB2A avatar"><span class="who">Jules &amp; Ben · JB2A</span> — animation content · <a href="https://github.com/Jules-Bens-Aa/JB2A_DnD5e">github.com/Jules-Bens-Aa</a></li>
+      <li><img class="credit-avatar" src="/resources/alen72948.png" alt="Artwork by Alen72948"><span class="who">Alen72948</span> — icon artwork · <a href="https://www.artstation.com/alen72948">artstation.com/alen72948</a></li>
     </ul>
   </section>
 
