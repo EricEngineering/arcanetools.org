@@ -608,18 +608,24 @@
 
   <section class="note">
     <p class="eyebrow">Before you install</p>
-    <h2>Your OS will probably warn you — here's why.</h2>
+    <h2>Windows might still flag it — here's why.</h2>
     <p>
-      These builds aren't code-signed yet, so Microsoft SmartScreen has no
-      reputation for them. The first time you run an installer on Windows you may
-      see a blue <em>“Windows protected your PC”</em> screen — click
-      <code>More info</code>, then <code>Run anyway</code>. On macOS, right-click
-      the app and choose <code>Open</code> the first time to get past Gatekeeper.
+      The builds are code-signed now — Windows through Microsoft Trusted
+      Signing, macOS notarized by Apple. But a fresh certificate hasn't earned a
+      reputation with Microsoft SmartScreen yet; that's built up as more people
+      download and run the app. So for a little while you may still see the blue
+      <em>“Windows protected your PC”</em> screen the first time you run the
+      installer — click <code>More info</code>, then <code>Run anyway</code>. It
+      goes away once enough installs vouch for the certificate.
     </p>
     <p>
-      Signing certificates are the next thing I'm buying. Until then, every build
-      is compiled in the open on GitHub, so you can read the workflow and the
-      source before you trust it.
+      On macOS the app is notarized by Apple, so it should just open. If
+      Gatekeeper ever hesitates, right-click the app and choose <code>Open</code>
+      the first time.
+    </p>
+    <p>
+      Every build is also compiled in the open on GitHub, so you can read the
+      workflow and the source before you trust it.
     </p>
   </section>
 
