@@ -3,7 +3,7 @@
 # 302 everywhere on purpose: these targets change, and a cached 301 is forever.
 
 /discord   https://discord.gg/U7KCaJ9Pkb                      302
-/patreon   https://www.patreon.com/EricEngineering            302
+/patreon   https://www.patreon.com/c/EricEngineering/membership   302
 /github    https://github.com/EricEngineering                 302
 /youtube   https://youtube.com/@EricEngineering               302
 
